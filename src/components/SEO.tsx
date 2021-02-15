@@ -9,19 +9,20 @@ import React, { FC } from 'react'
 import { Helmet } from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
 
+interface MetaType {
+  name: string
+  content: string
+}
+
+interface MetaProperty {
+  property: string
+  content: string
+}
+
 interface SEOProps {
   description?: string
   lang?: string
-  meta?: Array<
-  | {
-    name: string
-    content: string
-  }
-  | {
-    property: string
-    content: string
-  }
-  >
+  meta?: Array<MetaProperty | MetaType>
   title: string
 }
 
