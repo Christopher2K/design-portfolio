@@ -7,6 +7,16 @@ module.exports = {
     author: '@gatsbyjs',
   },
   plugins: [
+    {
+      resolve: 'gatsby-source-prismic',
+      options: {
+        repositoryName: 'euniceportfoliov2',
+        schemas: {
+          home_page: require('./src/schemas/home_page.json'),
+          project: require('./src/schemas/project.json'),
+        }
+      }
+    },
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-typescript',
@@ -35,8 +45,6 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {

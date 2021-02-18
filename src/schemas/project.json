@@ -1,0 +1,40 @@
+{
+    "Main": {
+        "name": {
+            "type": "Text",
+            "config": {
+                "label": "Name",
+                "placeholder": "Nom du projet"
+            }
+        },
+        "category_list": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "category": {
+                        "type": "Select",
+                        "config": {
+                            "options": [
+                                "Identité visuelle",
+                                "Site internet",
+                                "Application mobile",
+                                "Editor"
+                            ],
+                            "label": "Category",
+                            "placeholder": "Catégorie du projet"
+                        }
+                    }
+                },
+                "label": "Category list"
+            }
+        },
+        "thumbnail": {
+            "type": "Image",
+            "config": {
+                "constraint": {},
+                "thumbnails": [],
+                "label": "Thumbnail"
+            }
+        }
+    }
+}

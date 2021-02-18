@@ -1,0 +1,34 @@
+{
+    "Main": {
+        "full_name": {
+            "type": "Text",
+            "config": {
+                "label": "Full name",
+                "placeholder": "Eunice Tchitchiama"
+            }
+        },
+        "job_name": {
+            "type": "Text",
+            "config": {
+                "label": "Job name",
+                "placeholder": "Graphic designer...."
+            }
+        },
+        "mail": {
+            "type": "Text",
+            "config": {
+                "label": "mail",
+                "placeholder": "nom.prenom@gmail.com"
+            }
+        },
+        "footer": {
+            "type": "StructuredText",
+            "config": {
+                "multi": "paragraph, strong, em, hyperlink",
+                "allowTargetBlank": true,
+                "label": "Footer",
+                "placeholder": "Texte en bas de la page d'accueil"
+            }
+        }
+    }
+}
