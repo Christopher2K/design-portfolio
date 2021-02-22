@@ -10,6 +10,7 @@ import { ThemeProvider } from 'styled-components'
 
 import { Layout } from './src/components/Layout'
 import { theme } from './src/styles/theme'
+import { Global } from './src/styles/global'
 
 export function wrapPageElement({ element, props }) {
   return <Layout {...props}>{element}</Layout>
@@ -18,6 +19,7 @@ export function wrapPageElement({ element, props }) {
 export function wrapRootElement({ element }) {
   return (
     <ThemeProvider theme={theme}>
+      <Global />
       {element}
     </ThemeProvider>
   )
