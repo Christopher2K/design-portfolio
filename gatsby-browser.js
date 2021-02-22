@@ -8,7 +8,7 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import { Layout } from './src/components/Layout'
+import { Layout } from './src/components'
 import { theme } from './src/styles/theme'
 import { Global } from './src/styles/global'
 

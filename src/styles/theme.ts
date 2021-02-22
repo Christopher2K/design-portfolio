@@ -1,6 +1,7 @@
 export const theme = {
   layout: {
     maxWidth: 1440,
+    desktopNavHeight: '80px',
   },
 
   color: {
@@ -11,11 +12,14 @@ export const theme = {
   },
 
   font: {
+    title: 'Romie Trial, sans-serif',
     primary: '',
     secondary: '',
   },
 
-  spacing: {},
+  spacing: {
+    6: '6rem',
+  },
 }
 
 export type Theme = typeof theme
