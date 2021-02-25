@@ -13,11 +13,16 @@ export const theme = {
 
   font: {
     title: 'Romie Trial, sans-serif',
-    primary: '',
-    secondary: '',
+    primary: 'Lausanne, sans-serif',
+    secondary: 'Edwardian Script ITC, sans serif',
   },
 
   spacing: {
+    1: '1rem',
+    2: '2rem',
+    3: '3rem',
+    4: '4rem',
+    5: '5rem',
     6: '6rem',
   },
 }
