@@ -6,6 +6,7 @@ const Root = styled.main`
   height: 100vh;
   max-width: 100%;
   overflow-y: auto;
+  margin: 0 auto;
 `
 
 export const Layout: FC = ({ children }) => {

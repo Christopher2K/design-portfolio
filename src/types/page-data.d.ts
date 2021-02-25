@@ -1,11 +1,3 @@
-interface Category {
-  category: string
-}
-
-interface Image {
-  url: string
-}
-
 declare namespace PageData {
   interface Homepage {
     data: {
@@ -21,15 +13,11 @@ declare namespace PageData {
       }
 
       allPrismicProject: {
-        edges: {
+        edges: Array<{
           node: {
-            data: {
-              name: string
-              category_list: Category[]
-              thumbnail: Image
-            }
+            data: Model.ProjectData
           }
-        }
+        }>
       }
     }
   }
