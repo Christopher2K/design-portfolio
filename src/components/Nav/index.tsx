@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 import React, { FC } from 'react'
+import { mobileStyle } from 'styles/responsive'
 
 const Root = styled.nav`
   position: fixed;
@@ -16,6 +17,10 @@ const Root = styled.nav`
   height: ${({ theme }) => theme.layout.desktopNavHeight};
 
   background-color: ${({ theme }) => theme.color.grey};
+
+  ${({ theme }) => mobileStyle`
+    padding: 0 ${theme.spacing[2]};
+  `}
 `
 
 const NavSection = styled.div`
@@ -37,6 +42,10 @@ const NavSection = styled.div`
   &:last-of-type {
     justify-content: flex-end;
   }
+
+  ${mobileStyle`
+    padding: 0;
+  `}
 `
 
 const StyledLink = styled(Link)`
@@ -44,6 +53,10 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.color.black};
   font-size: 5rem;
   text-transform: uppercase;
+
+  ${mobileStyle`
+    font-size: 2.4rem;
+  `}
 `
 
 export const Nav: FC = () => {

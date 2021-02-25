@@ -1,7 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { graphql } from 'gatsby'
 import React, { FC } from 'react'
 import { Carousel, Nav, ProjectTile } from 'components'
+import { mobileStyle } from 'styles/responsive'
+
+const sidePadding = css`
+  padding-left: ${({ theme }) => theme.spacing[3]};
+  padding-right: ${({ theme }) => theme.spacing[3]};
+  ${({ theme }) => mobileStyle`
+    padding-left: ${theme.spacing[2]};
+    padding-right: ${theme.spacing[2]};
+  `}
+`
 
 const Root = styled.div`
   display: flex;
@@ -19,7 +29,9 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1440px;
+  max-width: ${({ theme }) => theme.layout.maxWidth}px;
+
+  ${sidePadding}
   margin-bottom: ${({ theme }) => theme.spacing[3]};
 `
 
@@ -33,6 +45,11 @@ const Title = styled.h1`
   font-weight: 400;
   font-family: ${({ theme }) => theme.font.title};
   text-transform: uppercase;
+
+  ${({ theme }) => mobileStyle`
+    display: block;
+    margin-bottom: ${theme.spacing[2]}
+  `}
 `
 
 const Subtitle = styled.h2`
@@ -40,12 +57,20 @@ const Subtitle = styled.h2`
   font-size: 1.7rem;
   font-family: ${({ theme }) => theme.font.primary};
   font-weight: normal;
+
+  ${mobileStyle`
+    display: block;
+  `}
 `
 
 const ContactLink = styled.a`
   font-size: 1.8rem;
   font-family: ${({ theme }) => theme.font.primary};
   color: ${({ theme }) => theme.color.black};
+
+  ${mobileStyle`
+    display: none;
+  `}
 `
 
 const ProjectGrid = styled.section`
@@ -53,14 +78,27 @@ const ProjectGrid = styled.section`
   grid-template-columns: repeat(3, 1fr);
   column-gap: ${({ theme }) => theme.spacing[2]};
   row-gap: ${({ theme }) => theme.spacing[4]};
-  max-width: 1440px;
+
+  max-width: ${({ theme }) => theme.layout.maxWidth}px;
   width: 100%;
+
+  ${sidePadding}
   margin-bottom: ${({ theme }) => theme.spacing[6]};
+
+  ${mobileStyle`
+    grid-template-columns: 1fr;
+  `}
 `
 
 const Footer = styled.footer`
+  ${sidePadding}
   width: 100%;
+  max-width: ${({ theme }) => theme.layout.maxWidth}px;
   padding-bottom: calc(${({ theme }) => theme.layout.desktopNavHeight} + 120px);
+
+  ${({ theme }) => mobileStyle`
+    padding-bottom: calc(${theme.layout.desktopNavHeight} + 60px);
+  `}
 
   p {
     text-align: center;

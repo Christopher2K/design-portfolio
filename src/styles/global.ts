@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
 import { reset } from './reset'
+import { mobileStyle } from './responsive'
 import RomieTRIALRegularWoff from 'assets/fonts/RomieTRIAL-Regular.woff'
 import RomieTRIALRegularWoff2 from 'assets/fonts/RomieTRIAL-Regular.woff2'
 import EdwardianScriptITCWoff from 'assets/fonts/EdwardianScriptITC.woff'
@@ -45,7 +46,11 @@ export const Global = createGlobalStyle`
     font-size: 10px;
     overflow-y: hidden;
     font-family: 'Lausanne', sans-serif;
-
+    
     background-color: ${({ theme }) => theme.color.grey};
+    
+    ${mobileStyle`
+      font-size: 9px;
+    `}
   }
 `
