@@ -33,6 +33,10 @@ const Header = styled.header`
 
   ${sidePadding}
   margin-bottom: ${({ theme }) => theme.spacing[3]};
+
+  ${({ theme }) => mobileStyle`
+    padding-top: ${theme.spacing[4]};
+  `}
 `
 
 const Titles = styled.div``
