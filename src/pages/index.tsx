@@ -112,10 +112,19 @@ const Footer = styled.footer`
 `
 
 const IndexPage: FC<PageData.Homepage> = ({ data }) => {
+  const carouselData = data.allPrismicProject.edges.map(project => {
+    const { data } = project.node
+
+    return {
+      label: data.name,
+      url: data.carousel_image.url,
+    }
+  })
+
   return (
     <Root>
       <Nav />
-      <Carousel />
+      <Carousel items={carouselData} />
       <Header>
         <Titles>
           <Title>{data.prismicHomePage.data.full_name}</Title>
