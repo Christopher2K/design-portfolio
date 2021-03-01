@@ -148,6 +148,7 @@ export const query = graphql`
         }
       }
     }
+
     allPrismicProject {
       edges {
         node {
@@ -157,6 +158,9 @@ export const query = graphql`
               category
             }
             thumbnail {
+              url
+            }
+            carousel_image {
               url
             }
           }

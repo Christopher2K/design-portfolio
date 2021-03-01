@@ -11,5 +11,6 @@ declare namespace Model {
     name: string
     category_list: Category[]
     thumbnail: Image
+    carousel_image: Image
   }
 }
