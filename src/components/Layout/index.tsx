@@ -10,5 +10,5 @@ const Root = styled.main`
 `
 
 export const Layout: FC = ({ children }) => {
-  return <Root>{children}</Root>
+  return <Root id="main">{children}</Root>
 }

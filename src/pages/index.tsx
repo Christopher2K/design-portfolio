@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { graphql } from 'gatsby'
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import { Carousel, Nav, ProjectTile } from 'components'
 import { mobileStyle } from 'styles/responsive'
 
@@ -111,7 +111,9 @@ const Footer = styled.footer`
   }
 `
 
-const IndexPage: FC<PageData.Homepage> = ({ data }) => {
+const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
+  const projectHeaderId = useMemo(() => 'projects-header', [])
+
   const carouselData = data.allPrismicProject.edges.map(project => {
     const { data } = project.node
 
@@ -123,9 +125,9 @@ const IndexPage: FC<PageData.Homepage> = ({ data }) => {
 
   return (
     <Root>
-      <Nav />
+      <Nav homepageProjectHeaderId={projectHeaderId} location={location} />
       <Carousel items={carouselData} />
-      <Header>
+      <Header id={projectHeaderId}>
         <Titles>
           <Title>{data.prismicHomePage.data.full_name}</Title>
           <Subtitle>{data.prismicHomePage.data.job_name}</Subtitle>
@@ -162,11 +164,28 @@ export const query = graphql`
       }
     }
 
-    allPrismicProject {
+    allPrismicProject(sort: { fields: data___number, order: ASC }) {
       edges {
         node {
           data {
+            number
             name
+            year
+            description_fr {
+              html
+            }
+            description_en {
+              html
+            }
+            assets {
+              type
+              video_link {
+                url
+              }
+              image {
+                url
+              }
+            }
             category_list {
               category
             }

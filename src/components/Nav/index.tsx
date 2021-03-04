@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import React, { FC, useCallback } from 'react'
 import { Link } from 'gatsby'
-import React, { FC } from 'react'
+import type { WindowLocation } from 'reach__router'
+import styled from 'styled-components'
 import { mobileStyle } from 'styles/responsive'
 
 const Root = styled.nav`
@@ -59,14 +60,40 @@ const StyledLink = styled(Link)`
   `}
 `
 
-export const Nav: FC = () => {
+interface NavProps {
+  homepageProjectHeaderId: string
+  location: WindowLocation
+}
+
+export const Nav: FC<NavProps> = ({ homepageProjectHeaderId, location }) => {
+  const scrollToProjects = useCallback(function scrollToProjets(
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) {
+    if (location.pathname === '/') {
+      e.preventDefault()
+      const projectHeaderElm = document.getElementById(homepageProjectHeaderId)
+      const scrollingContainer = document.getElementById('main')
+
+      if (projectHeaderElm && scrollingContainer) {
+        // ScrollTo
+        scrollingContainer.scrollTo({
+          top: projectHeaderElm.offsetTop,
+          behavior: 'smooth',
+        })
+      }
+    }
+  },
+  [])
+
   return (
     <Root>
       <NavSection>
         <StyledLink to="#">Infos</StyledLink>
       </NavSection>
       <NavSection>
-        <StyledLink to="#">Projets</StyledLink>
+        <StyledLink to="/" onClick={scrollToProjects}>
+          Projets
+        </StyledLink>
       </NavSection>
       <NavSection>
         <StyledLink to="#">Blog</StyledLink>

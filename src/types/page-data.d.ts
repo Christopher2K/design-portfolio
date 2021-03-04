@@ -1,6 +1,8 @@
-declare namespace PageData {
-  interface Homepage {
-    data: {
+import type { PageProps } from 'gatsby'
+
+declare global {
+  declare namespace PageData {
+    type Homepage = PageProps<{
       prismicHomePage: {
         data: {
           full_name: string
@@ -19,6 +21,6 @@ declare namespace PageData {
           }
         }>
       }
-    }
+    }>
   }
 }
