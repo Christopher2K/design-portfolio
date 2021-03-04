@@ -137,8 +137,10 @@ const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
 
       <ProjectGrid>
         {data.allPrismicProject.edges.map(project => {
-          const { data } = project.node
-          return <ProjectTile key={data.name} data={data} />
+          const { data, uid } = project.node
+          return (
+            <ProjectTile key={data.name} data={data} link={`/projet/${uid}`} />
+          )
         })}
       </ProjectGrid>
 
@@ -167,6 +169,7 @@ export const query = graphql`
     allPrismicProject(sort: { fields: data___number, order: ASC }) {
       edges {
         node {
+          uid
           data {
             number
             name

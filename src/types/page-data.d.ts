@@ -17,6 +17,7 @@ declare global {
       allPrismicProject: {
         edges: Array<{
           node: {
+            uid: string
             data: Model.ProjectData
           }
         }>
