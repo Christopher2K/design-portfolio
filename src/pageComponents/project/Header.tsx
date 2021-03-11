@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
+import { BaseButton } from 'components'
 import { desktopStyle, mobileStyle } from 'styles/responsive'
 import PlusIcon from 'assets/svg/plus.svg'
 
@@ -9,7 +10,8 @@ const Root = styled.header`
   justify-content: flex-start;
   align-items: flex-start;
 
-  display: 100%;
+  width: 100%;
+
   margin-bottom: ${({ theme }) => theme.spacing[6]};
 
   ${({ theme }) => mobileStyle`
@@ -56,12 +58,8 @@ const Right = styled.div`
   `}
 `
 
-const Button = styled.button`
+const Button = styled(BaseButton)`
   display: flex;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
   font-size: 3rem;
   padding: 3px;
 
@@ -86,6 +84,8 @@ interface HeaderProps {
   categoryText: string
   year: string
   className?: string
+  plusVisible?: boolean
+  onPlusIconClick?: (event: React.MouseEvent) => void
 }
 
 export const Header: FC<HeaderProps> = ({
@@ -93,6 +93,8 @@ export const Header: FC<HeaderProps> = ({
   categoryText,
   year,
   className,
+  plusVisible = false,
+  onPlusIconClick,
 }) => {
   return (
     <Root className={className}>
@@ -102,11 +104,13 @@ export const Header: FC<HeaderProps> = ({
           {categoryText}, {year}
         </Subtitle>
       </Left>
-      <Right>
-        <Button type="button">
-          <PlusIcon />
-        </Button>
-      </Right>
+      {plusVisible && (
+        <Right>
+          <Button type="button" onClick={onPlusIconClick}>
+            <PlusIcon />
+          </Button>
+        </Right>
+      )}
     </Root>
   )
 }

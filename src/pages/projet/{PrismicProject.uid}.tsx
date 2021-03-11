@@ -1,8 +1,11 @@
 import { graphql } from 'gatsby'
-import React, { FC } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import styled, { css } from 'styled-components'
-import { desktopStyle, mobileStyle } from 'styles/responsive'
+
 import { Header } from 'pageComponents/project/Header'
+import { BaseButton } from 'components'
+import CloseIcon from 'assets/svg/close.svg'
+import { mobileStyle } from 'styles/responsive'
 
 const Root = styled.div`
   display: flex;
@@ -34,15 +37,38 @@ const sideStyle = css`
   height: 100%;
 `
 
-const Left = styled.section`
+interface LeftProps {
+  descriptionPopupOpen: boolean
+}
+
+const Left = styled.section<LeftProps>`
   ${sideStyle};
-  ${mobileStyle`
-    display: none;
+
+  ${({ theme, descriptionPopupOpen }) => mobileStyle`
+    display: ${descriptionPopupOpen ? 'block' : 'none'};
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+    width: 100%;
+
+    background-color: ${theme.color.grey};
   `}
 `
 
 const MobileHeader = styled(Header)`
-  ${desktopStyle`
+  display: none;
+
+  ${mobileStyle`
+    display: flex;
+  `}
+`
+
+const DesktopHeader = styled(Header)`
+  display: block;
+
+  ${mobileStyle`
     display: none;
   `}
 `
@@ -54,14 +80,36 @@ const Right = styled.section`
 const LeftScrollableWrapper = styled(ScrollableWrapper)`
   padding-top: ${({ theme }) => theme.spacing[4]};
   padding-left: ${({ theme }) => theme.spacing[4]};
+
+  ${({ theme }) => mobileStyle`
+    padding: ${theme.spacing[3]} ${theme.spacing[2]};
+  `}
 `
 
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
   width: 70%;
   font-family: ${({ theme }) => theme.font.primary};
   font-size: 1.7rem;
   line-height: 2.465rem;
   margin-bottom: ${({ theme }) => theme.spacing[4]};
+
+  ${mobileStyle`
+    width: 100%;
+  `}
+`
+
+const CloseButton = styled(BaseButton)`
+  display: none;
+  ${({ theme }) => mobileStyle`
+    display: block;
+    align-self: flex-end;
+    margin-bottom: ${theme.spacing[2]};
+  `};
 `
 
 const Description = styled.section`
@@ -121,14 +169,42 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
     assets,
   } = data.prismicProject.data
 
+  // States
+  const [descriptionPopupOpen, setDescriptionPopupOpen] = useState<boolean>(
+    false,
+  )
+
+  // Computed
   const categoryText = categoryList.map(c => c.category).join(', ')
+
+  // Callbacks
+  const openDescriptionPopup = useCallback(function openDescriptionPopup(
+    event: React.MouseEvent,
+  ) {
+    event.stopPropagation()
+    setDescriptionPopupOpen(true)
+  },
+  [])
+
+  const closeDescriptionPopup = useCallback(function closeDescriptionPopup(
+    event: React.MouseEvent,
+  ) {
+    event.stopPropagation()
+    setDescriptionPopupOpen(false)
+  },
+  [])
 
   return (
     <Root>
-      <Left>
+      <Left descriptionPopupOpen={descriptionPopupOpen}>
         <LeftScrollableWrapper>
-          <Header name={name} categoryText={categoryText} year={year} />
+          <DesktopHeader name={name} categoryText={categoryText} year={year} />
           <Content>
+            {descriptionPopupOpen && (
+              <CloseButton type="button" onClick={closeDescriptionPopup}>
+                <CloseIcon />
+              </CloseButton>
+            )}
             <Description>
               <span>FR</span>
               <DescriptionContent
@@ -146,7 +222,13 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
       </Left>
       <Right>
         <ScrollableWrapper>
-          <MobileHeader name={name} categoryText={categoryText} year={year} />
+          <MobileHeader
+            name={name}
+            categoryText={categoryText}
+            year={year}
+            plusVisible={!descriptionPopupOpen}
+            onPlusIconClick={openDescriptionPopup}
+          />
           {assets.map(asset => {
             if (asset.type === 'image') {
               return (
