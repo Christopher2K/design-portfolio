@@ -17,6 +17,14 @@ module.exports = {
         }
       }
     },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /assets/
+        }
+      }
+    },
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-typescript',
@@ -33,6 +41,7 @@ module.exports = {
       options: {
         assets: path.join(__dirname, 'src/assets'),
         components: path.join(__dirname, 'src/components'),
+        pageComponents: path.join(__dirname, 'src/pageComponents'),
         hooks: path.join(__dirname, 'src/hooks'),
         styles: path.join(__dirname, 'src/styles'),
         utils: path.join(__dirname, 'src/utils'),

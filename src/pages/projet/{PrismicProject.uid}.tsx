@@ -1,6 +1,8 @@
 import { graphql } from 'gatsby'
 import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
+import { desktopStyle, mobileStyle } from 'styles/responsive'
+import { Header } from 'pageComponents/project/Header'
 
 const Root = styled.div`
   display: flex;
@@ -23,7 +25,7 @@ const ScrollableWrapper = styled.div`
   height: auto;
 `
 
-const Side = styled.section`
+const sideStyle = css`
   position: relative;
   overflow-y: auto;
   flex-basis: 50%;
@@ -32,29 +34,26 @@ const Side = styled.section`
   height: 100%;
 `
 
+const Left = styled.section`
+  ${sideStyle};
+  ${mobileStyle`
+    display: none;
+  `}
+`
+
+const MobileHeader = styled(Header)`
+  ${desktopStyle`
+    display: none;
+  `}
+`
+
+const Right = styled.section`
+  ${sideStyle}
+`
+
 const LeftScrollableWrapper = styled(ScrollableWrapper)`
   padding-top: ${({ theme }) => theme.spacing[4]};
   padding-left: ${({ theme }) => theme.spacing[4]};
-`
-
-const Header = styled.header`
-  display: 100%;
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
-`
-
-const Title = styled.h1`
-  width: 100%;
-  font-family: ${({ theme }) => theme.font.primary};
-  font-size: 1.7rem;
-  font-weight: normal;
-  line-height: 2.456rem;
-  text-transform: uppercase;
-`
-
-const Subtitle = styled(Title.withComponent('h2'))`
-  font-size: 1.6rem;
-  line-height: 2.32rem;
-  text-transform: none;
 `
 
 const Content = styled.div`
@@ -62,6 +61,7 @@ const Content = styled.div`
   font-family: ${({ theme }) => theme.font.primary};
   font-size: 1.7rem;
   line-height: 2.465rem;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
 `
 
 const Description = styled.section`
@@ -121,16 +121,13 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
     assets,
   } = data.prismicProject.data
 
+  const categoryText = categoryList.map(c => c.category).join(', ')
+
   return (
     <Root>
-      <Side>
+      <Left>
         <LeftScrollableWrapper>
-          <Header>
-            <Title>{name}</Title>
-            <Subtitle>
-              {categoryList.map(c => c.category).join(', ')}, {year}
-            </Subtitle>
-          </Header>
+          <Header name={name} categoryText={categoryText} year={year} />
           <Content>
             <Description>
               <span>FR</span>
@@ -146,15 +143,22 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
             </Description>
           </Content>
         </LeftScrollableWrapper>
-      </Side>
-      <Side>
+      </Left>
+      <Right>
         <ScrollableWrapper>
+          <MobileHeader name={name} categoryText={categoryText} year={year} />
           {assets.map(asset => {
             if (asset.type === 'image') {
-              return <ProjectImage src={asset.image.url} alt={''} /> // TODO: Check si c'est pas possible d'en mettre un prismic
+              return (
+                <ProjectImage
+                  key={asset.image.url}
+                  src={asset.image.url}
+                  alt={''}
+                />
+              ) // TODO: Check si c'est pas possible d'en mettre un prismic
             } else {
               return (
-                <IframeContainer>
+                <IframeContainer key={asset.video_link.url}>
                   <div>
                     <iframe
                       src={asset.video_link.url}
@@ -168,7 +172,7 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
             }
           })}
         </ScrollableWrapper>
-      </Side>
+      </Right>
     </Root>
   )
 }
