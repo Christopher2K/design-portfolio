@@ -1,13 +1,16 @@
 import React, { FC, useCallback } from 'react'
-import { Link } from 'gatsby'
 import type { WindowLocation } from 'reach__router'
 import styled from 'styled-components'
+
+import { NavLink } from 'components'
 import { mobileStyle } from 'styles/responsive'
 
 const Root = styled.nav`
   position: fixed;
   bottom: 0;
   left: 0;
+
+  z-index: 50;
 
   display: flex;
   flex-direction: row;
@@ -49,27 +52,21 @@ const NavSection = styled.div`
   `}
 `
 
-const StyledLink = styled(Link)`
-  font-family: ${({ theme }) => theme.font.title};
-  color: ${({ theme }) => theme.color.black};
-  font-size: 5rem;
-  text-transform: uppercase;
-
-  ${mobileStyle`
-    font-size: 2.4rem;
-  `}
-`
-
 interface NavProps {
-  homepageProjectHeaderId: string
-  location: WindowLocation
+  homepageProjectHeaderId?: string
+  location?: WindowLocation
+  className?: string
 }
 
-export const Nav: FC<NavProps> = ({ homepageProjectHeaderId, location }) => {
+export const Nav: FC<NavProps> = ({
+  homepageProjectHeaderId,
+  location,
+  className,
+}) => {
   const scrollToProjects = useCallback(function scrollToProjets(
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) {
-    if (location.pathname === '/') {
+    if (location && homepageProjectHeaderId && location.pathname === '/') {
       e.preventDefault()
       const projectHeaderElm = document.getElementById(homepageProjectHeaderId)
       const scrollingContainer = document.getElementById('main')
@@ -86,17 +83,17 @@ export const Nav: FC<NavProps> = ({ homepageProjectHeaderId, location }) => {
   [])
 
   return (
-    <Root>
+    <Root className={className}>
       <NavSection>
-        <StyledLink to="#">Infos</StyledLink>
+        <NavLink to="#">Infos</NavLink>
       </NavSection>
       <NavSection>
-        <StyledLink to="/" onClick={scrollToProjects}>
+        <NavLink to="/" onClick={scrollToProjects}>
           Projets
-        </StyledLink>
+        </NavLink>
       </NavSection>
       <NavSection>
-        <StyledLink to="#">Blog</StyledLink>
+        <NavLink to="#">Blog</NavLink>
       </NavSection>
     </Root>
   )

@@ -3,7 +3,7 @@ import React, { FC, useCallback, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Header } from 'pageComponents/project/Header'
-import { BaseButton } from 'components'
+import { BaseButton, Nav, ProjectNav } from 'components'
 import CloseIcon from 'assets/svg/close.svg'
 import { mobileStyle } from 'styles/responsive'
 
@@ -19,13 +19,28 @@ const Root = styled.div`
   max-width: ${({ theme }) => theme.layout.maxWidth}px;
 `
 
-const ScrollableWrapper = styled.div`
+const MobileNav = styled(Nav)`
+  display: none;
+
+  ${mobileStyle`
+    display: flex;
+  `}
+`
+
+const scrollableWrapperStyle = css`
   position: absolute;
   top: 0;
   left: 0;
 
   width: 100%;
   height: auto;
+`
+
+const RightScrollableWrapper = styled.div`
+  ${scrollableWrapperStyle}
+  padding-bottom: calc(
+    ${({ theme }) => `${theme.spacing[4]} + ${theme.layout.desktopNavHeight}`}
+  );
 `
 
 const sideStyle = css`
@@ -42,6 +57,7 @@ interface LeftProps {
 }
 
 const Left = styled.section<LeftProps>`
+  position: relative;
   ${sideStyle};
 
   ${({ theme, descriptionPopupOpen }) => mobileStyle`
@@ -77,7 +93,8 @@ const Right = styled.section`
   ${sideStyle}
 `
 
-const LeftScrollableWrapper = styled(ScrollableWrapper)`
+const LeftScrollableWrapper = styled.div`
+  ${scrollableWrapperStyle}
   padding-top: ${({ theme }) => theme.spacing[4]};
   padding-left: ${({ theme }) => theme.spacing[4]};
 
@@ -96,7 +113,9 @@ const Content = styled.div`
   font-family: ${({ theme }) => theme.font.primary};
   font-size: 1.7rem;
   line-height: 2.465rem;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  margin-bottom: calc(
+    ${({ theme }) => `${theme.spacing[4]} + ${theme.layout.desktopNavHeight}`}
+  );
 
   ${mobileStyle`
     width: 100%;
@@ -196,6 +215,7 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
 
   return (
     <Root>
+      <MobileNav />
       <Left descriptionPopupOpen={descriptionPopupOpen}>
         <LeftScrollableWrapper>
           <DesktopHeader name={name} categoryText={categoryText} year={year} />
@@ -218,10 +238,11 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
               />
             </Description>
           </Content>
+          <ProjectNav />
         </LeftScrollableWrapper>
       </Left>
       <Right>
-        <ScrollableWrapper>
+        <RightScrollableWrapper>
           <MobileHeader
             name={name}
             categoryText={categoryText}
@@ -253,7 +274,7 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
               )
             }
           })}
-        </ScrollableWrapper>
+        </RightScrollableWrapper>
       </Right>
     </Root>
   )
