@@ -3,7 +3,9 @@ import React, { FC, useCallback, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Header } from 'pageComponents/project/Header'
-import { BaseButton, Nav, ProjectNav } from 'components'
+import { ProjectNav } from 'pageComponents/project/ProjectNav'
+import { ProjectArrows } from 'pageComponents/project/ProjectArrows'
+import { BaseButton, Nav } from 'components'
 import CloseIcon from 'assets/svg/close.svg'
 import { mobileStyle } from 'styles/responsive'
 
@@ -109,7 +111,7 @@ const Content = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 
-  width: 70%;
+  width: 83.333%;
   font-family: ${({ theme }) => theme.font.primary};
   font-size: 1.7rem;
   line-height: 2.465rem;
@@ -178,6 +180,14 @@ const IframeContainer = styled.div`
   }
 `
 
+const MobileProjectArrows = styled(ProjectArrows)`
+  display: none;
+
+  ${mobileStyle`
+    display: flex;
+  `}
+`
+
 const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
   const {
     name,
@@ -186,6 +196,7 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
     description_en: { html: descriptionEn },
     description_fr: { html: descriptionFr },
     assets,
+    number: currentProjectNumber,
   } = data.prismicProject.data
 
   // States
@@ -195,6 +206,20 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
 
   // Computed
   const categoryText = categoryList.map(c => c.category).join(', ')
+  const projects = data.allPrismicProject.nodes.map(project => ({
+    uid: project.uid,
+    number: project.data.number,
+  }))
+  const previousProjectUrl = `/projet/${
+    (
+      projects.find(p => currentProjectNumber - 1 === p.number) ??
+      projects[projects.length - 1]
+    ).uid
+  }`
+  const nextProjectUrl = `/projet/${
+    (projects.find(p => currentProjectNumber + 1 === p.number) ?? projects[0])
+      .uid
+  }`
 
   // Callbacks
   const openDescriptionPopup = useCallback(function openDescriptionPopup(
@@ -238,7 +263,10 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
               />
             </Description>
           </Content>
-          <ProjectNav />
+          <ProjectNav
+            previousUrl={previousProjectUrl}
+            nextUrl={nextProjectUrl}
+          />
         </LeftScrollableWrapper>
       </Left>
       <Right>
@@ -259,7 +287,7 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
                   alt={''}
                 />
               ) // TODO: Check si c'est pas possible d'en mettre un prismic
-            } else {
+            } else if (asset.type === 'video') {
               return (
                 <IframeContainer key={asset.video_link.url}>
                   <div>
@@ -272,8 +300,14 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
                   </div>
                 </IframeContainer>
               )
+            } else {
+              return null
             }
           })}
+          <MobileProjectArrows
+            nextUrl={nextProjectUrl}
+            previousUrl={previousProjectUrl}
+          />
         </RightScrollableWrapper>
       </Right>
     </Root>
@@ -313,6 +347,15 @@ export const pageQuery = graphql`
         }
         carousel_image {
           url
+        }
+      }
+    }
+
+    allPrismicProject(sort: { fields: data___number, order: ASC }) {
+      nodes {
+        uid
+        data {
+          number
         }
       }
     }

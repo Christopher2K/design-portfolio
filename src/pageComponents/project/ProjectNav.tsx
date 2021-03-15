@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
 
 import { NavLink } from 'components'
 import { mobileStyle } from 'styles/responsive'
+import { ProjectArrows } from './ProjectArrows'
 
 const Root = styled.div`
   position: fixed;
@@ -18,31 +18,35 @@ const Root = styled.div`
 `
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   width: 50%;
   height: 100%;
   background-color: ${({ theme }) => theme.color.grey};
   padding-left: ${({ theme }) => theme.spacing[4]};
 `
 
-const ArrowContainer = styled.div``
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-const SiblingProjectLink = styled(Link)``
+  width: 83.333%;
+  height: 100%;
+`
 
-interface ProjectNavProps {}
+interface ProjectNavProps {
+  previousUrl: string
+  nextUrl: string
+}
 
-export const ProjectNav: FC<ProjectNavProps> = () => {
+export const ProjectNav: FC<ProjectNavProps> = ({ previousUrl, nextUrl }) => {
   return (
     <Root>
       <Wrapper>
-        <NavLink to="/">Projets</NavLink>
-        <ArrowContainer>
-          <SiblingProjectLink to="#"></SiblingProjectLink>
-          <SiblingProjectLink to="#"></SiblingProjectLink>
-        </ArrowContainer>
+        <Content>
+          <NavLink to="/">Projets</NavLink>
+          <ProjectArrows {...{ previousUrl, nextUrl }} />
+        </Content>
       </Wrapper>
     </Root>
   )

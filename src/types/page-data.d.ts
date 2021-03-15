@@ -24,6 +24,14 @@ declare global {
       }
     }>
     type SingleProjectPage = PageProps<{
+      allPrismicProject: {
+        nodes: Array<{
+          uid: string
+          data: {
+            number: number
+          }
+        }>
+      }
       prismicProject: {
         uid: string
         data: Model.ProjectData
