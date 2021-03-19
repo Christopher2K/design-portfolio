@@ -1,0 +1,249 @@
+{
+    "Main": {
+        "name": {
+            "type": "Text",
+            "config": {
+                "label": "Nom complet",
+                "placeholder": "Eunice T."
+            }
+        },
+        "email": {
+            "type": "Text",
+            "config": {
+                "label": "Email",
+                "placeholder": "email@test.fr"
+            }
+        },
+        "social_networks": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "network_name": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Nom du réseau",
+                            "placeholder": "Twitter"
+                        }
+                    },
+                    "network_link": {
+                        "type": "Link",
+                        "config": {
+                            "allowTargetBlank": true,
+                            "label": "Lien vers le réseau"
+                        }
+                    }
+                },
+                "label": "Réseaux sociaux"
+            }
+        },
+        "media": {
+            "type": "Image",
+            "config": {
+                "constraint": {},
+                "thumbnails": [],
+                "label": "Media"
+            }
+        }
+    },
+    "Informations en francais": {
+        "fr_bio": {
+            "type": "StructuredText",
+            "config": {
+                "multi": "paragraph, strong, em, hyperlink, image",
+                "allowTargetBlank": true,
+                "label": "Biographie FR",
+                "placeholder": "Biographie FR"
+            }
+        },
+        "fr_domains": {
+            "type": "Text",
+            "config": {
+                "label": "Domaines d'expertise FR",
+                "placeholder": "IDENTITÉ VISUELLE / WEB ..."
+            }
+        },
+        "fr_publications": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "fr_publication_date": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Date",
+                            "placeholder": "2020"
+                        }
+                    },
+                    "fr_publication_title": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Titre"
+                        }
+                    },
+                    "fr_publication_link": {
+                        "type": "StructuredText",
+                        "config": {
+                            "single": "hyperlink",
+                            "allowTargetBlank": true,
+                            "label": "Lien"
+                        }
+                    }
+                },
+                "label": "Publication FR"
+            }
+        },
+        "fr_exhibits": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "fr_exhibit_date": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Date",
+                            "placeholder": "2020"
+                        }
+                    },
+                    "fr_exhibit_title": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Titre"
+                        }
+                    },
+                    "fr_exhibit_place": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Lieu"
+                        }
+                    }
+                },
+                "label": "Exposition"
+            }
+        },
+        "fr_degrees": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "fr_degree_date": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Date",
+                            "placeholder": "2020"
+                        }
+                    },
+                    "fr_degree_name": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Nom"
+                        }
+                    },
+                    "fr_degree_school": {
+                        "type": "Text",
+                        "config": {
+                            "label": "École"
+                        }
+                    }
+                },
+                "label": "Diplômes"
+            }
+        }
+    },
+    "Informations en anglais": {
+        "en_bio": {
+            "type": "StructuredText",
+            "config": {
+                "multi": "paragraph, strong, em, hyperlink, image",
+                "allowTargetBlank": true,
+                "label": "Biographie",
+                "placeholder": "EN Bio"
+            }
+        },
+        "en_domains": {
+            "type": "Text",
+            "config": {
+                "label": "Domaines d'expertise",
+                "placeholder": "VISUAL IDENTITY / WEB..."
+            }
+        },
+        "en_publications": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "en_publication_date": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Date",
+                            "placeholder": "2020"
+                        }
+                    },
+                    "en_publication_title": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Titre"
+                        }
+                    },
+                    "en_publication_link": {
+                        "type": "StructuredText",
+                        "config": {
+                            "single": "hyperlink",
+                            "allowTargetBlank": true,
+                            "label": "Lien"
+                        }
+                    }
+                },
+                "label": "en_publications"
+            }
+        },
+        "en_exhibits": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "en_exhibit_date": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Date"
+                        }
+                    },
+                    "en_exhibit_title": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Titre"
+                        }
+                    },
+                    "en_exhibit_place": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Lieu"
+                        }
+                    }
+                },
+                "label": "Expositions"
+            }
+        },
+        "en_degrees": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "en_degree_date": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Date",
+                            "placeholder": "2020"
+                        }
+                    },
+                    "en_degree_name": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Nom"
+                        }
+                    },
+                    "en_degree_school": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Ecole"
+                        }
+                    }
+                },
+                "label": "Diplomes"
+            }
+        }
+    }
+}

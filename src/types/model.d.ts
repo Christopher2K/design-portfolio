@@ -7,6 +7,8 @@ declare namespace Model {
     url: string
   }
 
+  type Link = Image
+
   interface Video extends Image {}
 
   interface HTMLString {

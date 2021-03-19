@@ -13,6 +13,7 @@ module.exports = {
         repositoryName: 'euniceportfoliov2',
         schemas: {
           home_page: require('./src/schemas/home_page.json'),
+          information_page: require('./src/schemas/information_page.json'),
           project: require('./src/schemas/project.json'),
         }
       }

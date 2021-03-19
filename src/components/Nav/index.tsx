@@ -85,7 +85,7 @@ export const Nav: FC<NavProps> = ({
   return (
     <Root className={className}>
       <NavSection>
-        <NavLink to="#">Infos</NavLink>
+        <NavLink to="/infos">Infos</NavLink>
       </NavSection>
       <NavSection>
         <NavLink to="/" onClick={scrollToProjects}>
@@ -93,7 +93,9 @@ export const Nav: FC<NavProps> = ({
         </NavLink>
       </NavSection>
       <NavSection>
-        <NavLink to="#">Blog</NavLink>
+        <NavLink target="_blank" to="https://twenitweni.fr">
+          Blog
+        </NavLink>
       </NavSection>
     </Root>
   )
