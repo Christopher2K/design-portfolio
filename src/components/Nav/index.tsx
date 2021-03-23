@@ -85,17 +85,21 @@ export const Nav: FC<NavProps> = ({
   return (
     <Root className={className}>
       <NavSection>
-        <NavLink to="/infos">Infos</NavLink>
+        <NavLink.GatsbyLink to="/infos">Infos</NavLink.GatsbyLink>
       </NavSection>
       <NavSection>
-        <NavLink to="/" onClick={scrollToProjects}>
+        <NavLink.GatsbyLink to="/" onClick={scrollToProjects}>
           Projets
-        </NavLink>
+        </NavLink.GatsbyLink>
       </NavSection>
       <NavSection>
-        <NavLink target="_blank" to="https://twenitweni.fr">
+        <NavLink.BaseLink
+          target="_blank"
+          rel="noreferrer"
+          href="https://twenitweni.fr"
+        >
           Blog
-        </NavLink>
+        </NavLink.BaseLink>
       </NavSection>
     </Root>
   )
