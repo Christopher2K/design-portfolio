@@ -40,7 +40,10 @@ const Wrapper = styled.div<WrapperProps>`
   transition: transform 200ms ease-out;
 `
 
-const Item = styled.div`
+interface ItemProps {
+  backgroundUrl: string
+}
+const Item = styled.div<ItemProps>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -51,6 +54,10 @@ const Item = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+
+  background-image: url('${props => props.backgroundUrl}');
+  background-position: center center;
+  background-size: cover;
 `
 
 const ImageLabel = styled.p`
@@ -59,13 +66,6 @@ const ImageLabel = styled.p`
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.8rem;
-`
-
-const ImageItem = styled.img`
-  width: auto;
-  height: auto;
-  max-height: 100%;
-  max-width: 100%;
 `
 
 interface OverlayButtonProps {
@@ -124,11 +124,10 @@ export const Carousel: FC<CarouselProps> = ({ items }) => {
       <OverlayButton side="left" onClick={goToPrevImage} />
       <Wrapper index={currentImage}>
         {items.map((item, index) => (
-          <Item key={item.label}>
+          <Item key={item.label} backgroundUrl={item.url}>
             <ImageLabel>
               {item.label} [{index + 1} / {items.length}]
             </ImageLabel>
-            <ImageItem src={item.url} alt={item.label} />
           </Item>
         ))}
       </Wrapper>

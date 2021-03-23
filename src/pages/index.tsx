@@ -29,7 +29,6 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: ${({ theme }) => theme.layout.maxWidth}px;
 
   ${sidePadding}
   margin-bottom: ${({ theme }) => theme.spacing[3]};
@@ -83,7 +82,6 @@ const ProjectGrid = styled.section`
   column-gap: ${({ theme }) => theme.spacing[2]};
   row-gap: ${({ theme }) => theme.spacing[4]};
 
-  max-width: ${({ theme }) => theme.layout.maxWidth}px;
   width: 100%;
 
   ${sidePadding}
