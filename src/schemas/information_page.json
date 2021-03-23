@@ -1,5 +1,11 @@
 {
     "Main": {
+        "color": {
+            "type": "Color",
+            "config": {
+                "label": "Couleur de la page"
+            }
+        },
         "name": {
             "type": "Text",
             "config": {

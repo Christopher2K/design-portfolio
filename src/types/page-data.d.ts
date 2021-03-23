@@ -38,9 +38,10 @@ declare global {
       }
     }>
 
-    interface InfosPage {
+    type InfosPage = PageProps<{
       prismicInformationPage: {
         data: {
+          color: string
           name: string
           email: string
           social_networks: Array<{
@@ -50,11 +51,11 @@ declare global {
           media: Model.Image
           fr_bio: Model.HTMLString
           fr_domains: string
-          fr_publications: {
+          fr_publications: Array<{
             fr_publication_date: string
             fr_publication_title: string
             fr_publication_link: Model.HTMLString
-          }
+          }>
           fr_degrees: Array<{
             fr_degree_date: string
             fr_degree_name: string
@@ -85,6 +86,6 @@ declare global {
           }>
         }
       }
-    }
+    }>
   }
 }
