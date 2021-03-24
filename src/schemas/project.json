@@ -37,9 +37,12 @@
                         "config": {
                             "options": [
                                 "Identité visuelle",
+                                "Identité digitale",
                                 "Site internet",
                                 "Application mobile",
-                                "Editor"
+                                "Édition",
+                                "Lettrage",
+                                "Muséographie"
                             ],
                             "label": "Category",
                             "placeholder": "Catégorie du projet"
@@ -55,14 +58,6 @@
                 "constraint": {},
                 "thumbnails": [],
                 "label": "Image de miniature"
-            }
-        },
-        "carousel_image": {
-            "type": "Image",
-            "config": {
-                "constraint": {},
-                "thumbnails": [],
-                "label": "Image de carousel"
             }
         }
     },

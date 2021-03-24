@@ -11,6 +11,11 @@ declare global {
           footer: {
             html: string
           }
+          carousel_items: Array<{
+            title: string
+            image: Image
+            text_background: 'light' | 'dark'
+          }>
         }
       }
 

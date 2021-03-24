@@ -30,6 +30,5 @@ declare namespace Model {
     description_en: HTMLString
     assets: Asset[]
     thumbnail: Image
-    carousel_image: Image
   }
 }

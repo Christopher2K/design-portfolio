@@ -345,9 +345,6 @@ export const pageQuery = graphql`
         thumbnail {
           url
         }
-        carousel_image {
-          url
-        }
       }
     }
 

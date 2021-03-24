@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { graphql } from 'gatsby'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { Carousel, Nav, ProjectTile } from 'components'
 import { mobileStyle } from 'styles/responsive'
 
@@ -112,19 +112,44 @@ const Footer = styled.footer`
 const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
   const projectHeaderId = useMemo(() => 'projects-header', [])
 
-  const carouselData = data.allPrismicProject.edges.map(project => {
-    const { data } = project.node
+  const carouselData = data.prismicHomePage.data.carousel_items.map(item => {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { image, title, text_background } = item
 
     return {
-      label: data.name,
-      url: data.carousel_image.url,
+      label: title,
+      url: image.url,
+      textBackground: text_background,
     }
   })
 
+  const scrollToProjects = useCallback(function scrollToProjects() {
+    const projectHeaderElm = document.getElementById(projectHeaderId)
+    const scrollingContainer = document.getElementById('main')
+
+    if (projectHeaderElm && scrollingContainer) {
+      // ScrollTo
+      scrollingContainer.scrollTo({
+        top: projectHeaderElm.offsetTop,
+        behavior: 'smooth',
+      })
+    }
+  }, [])
+
+  const scrollToProjectsOnClick = useCallback(
+    function scrollToProjectsOnClick(
+      e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    ) {
+      e.preventDefault()
+      scrollToProjects()
+    },
+    [scrollToProjects],
+  )
+
   return (
     <Root>
-      <Nav homepageProjectHeaderId={projectHeaderId} location={location} />
-      <Carousel items={carouselData} />
+      <Nav onProjectsClicked={scrollToProjectsOnClick} />
+      <Carousel items={carouselData} onEnd={scrollToProjects} />
       <Header id={projectHeaderId}>
         <Titles>
           <Title>{data.prismicHomePage.data.full_name}</Title>
@@ -161,6 +186,13 @@ export const query = graphql`
         footer {
           html
         }
+        carousel_items {
+          title
+          image {
+            url
+          }
+          text_background
+        }
       }
     }
 
@@ -191,9 +223,6 @@ export const query = graphql`
               category
             }
             thumbnail {
-              url
-            }
-            carousel_image {
               url
             }
           }

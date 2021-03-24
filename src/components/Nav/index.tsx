@@ -1,5 +1,4 @@
-import React, { FC, useCallback } from 'react'
-import type { WindowLocation } from 'reach__router'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { NavLink } from 'components'
@@ -53,42 +52,18 @@ const NavSection = styled.div`
 `
 
 interface NavProps {
-  homepageProjectHeaderId?: string
-  location?: WindowLocation
+  onProjectsClicked?: (e: React.MouseEvent<HTMLAnchorElement>) => void
   className?: string
 }
 
-export const Nav: FC<NavProps> = ({
-  homepageProjectHeaderId,
-  location,
-  className,
-}) => {
-  const scrollToProjects = useCallback(function scrollToProjets(
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-  ) {
-    if (location && homepageProjectHeaderId && location.pathname === '/') {
-      e.preventDefault()
-      const projectHeaderElm = document.getElementById(homepageProjectHeaderId)
-      const scrollingContainer = document.getElementById('main')
-
-      if (projectHeaderElm && scrollingContainer) {
-        // ScrollTo
-        scrollingContainer.scrollTo({
-          top: projectHeaderElm.offsetTop,
-          behavior: 'smooth',
-        })
-      }
-    }
-  },
-  [])
-
+export const Nav: FC<NavProps> = ({ onProjectsClicked, className }) => {
   return (
     <Root className={className}>
       <NavSection>
         <NavLink.GatsbyLink to="/infos">Infos</NavLink.GatsbyLink>
       </NavSection>
       <NavSection>
-        <NavLink.GatsbyLink to="/" onClick={scrollToProjects}>
+        <NavLink.GatsbyLink to="/#projets" onClick={onProjectsClicked}>
           Projets
         </NavLink.GatsbyLink>
       </NavSection>

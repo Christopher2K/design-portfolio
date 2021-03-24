@@ -30,5 +30,39 @@
                 "placeholder": "Texte en bas de la page d'accueil"
             }
         }
+    },
+    "Carousel": {
+        "carousel_items": {
+            "type": "Group",
+            "config": {
+                "fields": {
+                    "image": {
+                        "type": "Image",
+                        "config": {
+                            "constraint": {},
+                            "thumbnails": [],
+                            "label": "Image"
+                        }
+                    },
+                    "title": {
+                        "type": "Text",
+                        "config": {
+                            "label": "Titre"
+                        }
+                    },
+                    "text_background": {
+                        "type": "Select",
+                        "config": {
+                            "options": [
+                                "light",
+                                "dark"
+                            ],
+                            "label": "Fond du texte"
+                        }
+                    }
+                },
+                "label": "Images"
+            }
+        }
     }
 }

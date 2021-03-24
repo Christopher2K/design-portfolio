@@ -60,12 +60,20 @@ const Item = styled.div<ItemProps>`
   background-size: cover;
 `
 
-const ImageLabel = styled.p`
+interface ImageLabelProps {
+  background: 'light' | 'dark'
+}
+const ImageLabel = styled.p<ImageLabelProps>`
   position: absolute;
   top: ${({ theme }) => theme.spacing[4]};
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.8rem;
+  padding: ${({ theme }) => `${theme.spacing[1]}`};
+  background-color: ${({ background }) =>
+    background === 'dark' ? '#000000' : '#FFFFFF'};
+  color: ${({ background }) =>
+    background === 'light' ? '#000000' : '#FFFFFF'};
 `
 
 interface OverlayButtonProps {
@@ -93,16 +101,19 @@ interface CarouselProps {
   items: Array<{
     label: string
     url: string
+    textBackground: 'light' | 'dark'
   }>
+  onEnd: () => void
 }
 
-export const Carousel: FC<CarouselProps> = ({ items }) => {
+export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
   const [currentImage, setCurrentImage] = useState(0)
 
   const goToNextImage = useCallback(function goToNextImage() {
     setCurrentImage(current => {
       if (current === items.length - 1) {
-        return 0
+        onEnd()
+        return current
       }
 
       return current + 1
@@ -112,7 +123,7 @@ export const Carousel: FC<CarouselProps> = ({ items }) => {
   const goToPrevImage = useCallback(function goToNextImage() {
     setCurrentImage(current => {
       if (current === 0) {
-        return items.length - 1
+        return current
       }
 
       return current - 1
@@ -125,7 +136,7 @@ export const Carousel: FC<CarouselProps> = ({ items }) => {
       <Wrapper index={currentImage}>
         {items.map((item, index) => (
           <Item key={item.label} backgroundUrl={item.url}>
-            <ImageLabel>
+            <ImageLabel background={item.textBackground}>
               {item.label} [{index + 1} / {items.length}]
             </ImageLabel>
           </Item>
