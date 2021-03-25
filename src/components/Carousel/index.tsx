@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { mobileStyle } from 'styles/responsive'
-import ArrowIcon from 'assets/svg/arrow.svg'
+import arrowLeft from 'assets/icons/arrow-left.png'
+import arrowRight from 'assets/icons/arrow-right.png'
 
 const Root = styled.div`
   position: relative;
@@ -71,10 +72,7 @@ const ImageLabel = styled.p<ImageLabelProps>`
   transform: translateX(-50%);
   font-size: 1.8rem;
   padding: ${({ theme }) => `${theme.spacing[1]}`};
-  background-color: ${({ background }) =>
-    background === 'dark' ? '#000000' : '#FFFFFF'};
-  color: ${({ background }) =>
-    background === 'light' ? '#000000' : '#FFFFFF'};
+  color: ${({ background }) => (background === 'dark' ? '#000000' : '#FFFFFF')};
 `
 
 interface OverlayButtonProps {
@@ -90,7 +88,8 @@ const OverlayButton = styled.button<OverlayButtonProps>`
   background: transparent;
   border: none;
   outline: none;
-  cursor: pointer;
+  cursor: url('${props => (props.side === 'left' ? arrowLeft : arrowRight)}'),
+    auto;
   margin: 0;
   padding: 0;
 
@@ -103,13 +102,6 @@ const CursorIndicator = styled.div`
   z-index: 1000;
 
   user-select: none;
-`
-
-interface StyledArrowIconProps {
-  rotate: boolean
-}
-const StyledArrowIcon = styled(ArrowIcon)<StyledArrowIconProps>`
-  transform: rotate(${props => (props.rotate ? '180deg' : '0')});
 `
 
 interface CarouselProps {
@@ -193,9 +185,7 @@ export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
             top: coords.top + 15,
             left: coords.left + 15,
           }}
-        >
-          <StyledArrowIcon rotate={cursorArrow === 'left'} />
-        </CursorIndicator>
+        ></CursorIndicator>
       )}
     </Root>
   )
