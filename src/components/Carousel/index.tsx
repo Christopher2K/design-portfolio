@@ -1,6 +1,7 @@
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { mobileStyle } from 'styles/responsive'
+import ArrowIcon from 'assets/svg/arrow.svg'
 
 const Root = styled.div`
   position: relative;
@@ -97,6 +98,20 @@ const OverlayButton = styled.button<OverlayButtonProps>`
   z-index: 10;
 `
 
+const CursorIndicator = styled.div`
+  position: fixed;
+  z-index: 1000;
+
+  user-select: none;
+`
+
+interface StyledArrowIconProps {
+  rotate: boolean
+}
+const StyledArrowIcon = styled(ArrowIcon)<StyledArrowIconProps>`
+  transform: rotate(${props => (props.rotate ? '180deg' : '0')});
+`
+
 interface CarouselProps {
   items: Array<{
     label: string
@@ -107,7 +122,23 @@ interface CarouselProps {
 }
 
 export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
+  const cursorIndicatorRef = useRef<HTMLDivElement>(null)
+
   const [currentImage, setCurrentImage] = useState(0)
+  const [coords, setCoords] = useState({ top: 0, left: 0 })
+  const [cursorArrow, setCursorArrow] = useState<'left' | 'right' | undefined>(
+    undefined,
+  )
+
+  const updateIndicatorPosition = useCallback(function updateIndicatorPosition(
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) {
+    setCoords({
+      top: event.nativeEvent.clientY,
+      left: event.nativeEvent.clientX,
+    })
+  },
+  [])
 
   const goToNextImage = useCallback(function goToNextImage() {
     setCurrentImage(current => {
@@ -132,7 +163,13 @@ export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
 
   return (
     <Root>
-      <OverlayButton side="left" onClick={goToPrevImage} />
+      <OverlayButton
+        side="left"
+        onClick={goToPrevImage}
+        onMouseEnter={() => setCursorArrow('left')}
+        onMouseLeave={() => setCursorArrow(undefined)}
+        onMouseMove={updateIndicatorPosition}
+      />
       <Wrapper index={currentImage}>
         {items.map((item, index) => (
           <Item key={item.label} backgroundUrl={item.url}>
@@ -142,7 +179,24 @@ export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
           </Item>
         ))}
       </Wrapper>
-      <OverlayButton side="right" onClick={goToNextImage} />
+      <OverlayButton
+        side="right"
+        onClick={goToNextImage}
+        onMouseEnter={() => setCursorArrow('right')}
+        onMouseLeave={() => setCursorArrow(undefined)}
+        onMouseMove={updateIndicatorPosition}
+      />
+      {cursorArrow !== undefined && (
+        <CursorIndicator
+          ref={cursorIndicatorRef}
+          style={{
+            top: coords.top + 15,
+            left: coords.left + 15,
+          }}
+        >
+          <StyledArrowIcon rotate={cursorArrow === 'left'} />
+        </CursorIndicator>
+      )}
     </Root>
   )
 }
