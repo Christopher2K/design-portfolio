@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { NavLink } from 'components'
 import { mobileStyle } from 'styles/responsive'
-import { ProjectArrows } from './ProjectArrows'
 
 const Root = styled.div`
   position: fixed;
@@ -13,15 +12,21 @@ const Root = styled.div`
   height: ${({ theme }) => theme.layout.desktopNavHeight};
   transform: translateX(-50%);
 
-  ${mobileStyle`display: none;`}
+  ${mobileStyle`
+    left: 0;
+    transform: translateX(0);
+  `}
 `
 
 const Wrapper = styled.div`
   width: 50%;
   height: 100%;
-  max-width: 1000px;
-  background-color: ${({ theme }) => theme.color.grey};
   padding-left: ${({ theme }) => theme.spacing[4]};
+
+  ${({ theme }) => mobileStyle`
+    width: 100%;
+    padding-left: ${theme.spacing[2]};
+  `}
 `
 
 const Content = styled.div`
@@ -32,20 +37,22 @@ const Content = styled.div`
 
   width: 83.333%;
   height: 100%;
+
+  a {
+    color: ${({ theme }) => theme.color.grey};
+  }
 `
 
-interface ProjectNavProps {
-  previousUrl: string
-  nextUrl: string
+interface InfoNavProps {
+  customBackground: string
 }
 
-export const ProjectNav: FC<ProjectNavProps> = ({ previousUrl, nextUrl }) => {
+export const InfoNav: FC<InfoNavProps> = ({ customBackground }) => {
   return (
     <Root>
-      <Wrapper>
+      <Wrapper style={{ backgroundColor: customBackground }}>
         <Content>
-          <NavLink.GatsbyLink to="/#scroll">Projets</NavLink.GatsbyLink>
-          <ProjectArrows {...{ previousUrl, nextUrl }} />
+          <NavLink.GatsbyLink to="/#scroll">Close</NavLink.GatsbyLink>
         </Content>
       </Wrapper>
     </Root>

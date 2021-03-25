@@ -18,7 +18,6 @@ const Root = styled.div`
   width: 100%;
   height: 100%;
   margin: auto;
-  max-width: ${({ theme }) => theme.layout.maxWidth}px;
 `
 
 const MobileNav = styled(Nav)`
@@ -60,6 +59,7 @@ interface LeftProps {
 
 const Left = styled.section<LeftProps>`
   position: relative;
+  max-width: 1000px;
   ${sideStyle};
 
   ${({ theme, descriptionPopupOpen }) => mobileStyle`
@@ -121,6 +121,8 @@ const Content = styled.div`
 
   ${mobileStyle`
     width: 100%;
+    margin-top: 8rem;
+
   `}
 `
 
@@ -128,8 +130,9 @@ const CloseButton = styled(BaseButton)`
   display: none;
   ${({ theme }) => mobileStyle`
     display: block;
-    align-self: flex-end;
-    margin-bottom: ${theme.spacing[2]};
+    position: fixed;
+    top: 40px;
+    right: 20px;
   `};
 `
 
@@ -210,13 +213,13 @@ const SingleProjectPage: FC<PageData.SingleProjectPage> = ({ data }) => {
     uid: project.uid,
     number: project.data.number,
   }))
-  const previousProjectUrl = `/projet/${
+  const nextProjectUrl = `/projet/${
     (
       projects.find(p => currentProjectNumber - 1 === p.number) ??
       projects[projects.length - 1]
     ).uid
   }`
-  const nextProjectUrl = `/projet/${
+  const previousProjectUrl = `/projet/${
     (projects.find(p => currentProjectNumber + 1 === p.number) ?? projects[0])
       .uid
   }`

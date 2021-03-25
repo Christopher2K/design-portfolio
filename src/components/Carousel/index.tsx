@@ -174,7 +174,7 @@ export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
         {items.map((item, index) => (
           <Item key={item.label} backgroundUrl={item.url}>
             <ImageLabel background={item.textBackground}>
-              {item.label} [{index + 1} / {items.length}]
+              {item.label} [{index + 1}/{items.length}]
             </ImageLabel>
           </Item>
         ))}

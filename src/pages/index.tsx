@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { graphql } from 'gatsby'
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useCallback, useEffect, useMemo } from 'react'
 import { Carousel, Nav, ProjectTile } from 'components'
 import { mobileStyle } from 'styles/responsive'
 
@@ -29,6 +29,7 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-shrink: 0;
 
   ${sidePadding}
   margin-bottom: ${({ theme }) => theme.spacing[3]};
@@ -110,7 +111,7 @@ const Footer = styled.footer`
 `
 
 const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
-  const projectHeaderId = useMemo(() => 'projects-header', [])
+  const projectHeaderId = useMemo(() => 'projects', [])
 
   const carouselData = data.prismicHomePage.data.carousel_items.map(item => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -126,11 +127,12 @@ const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
   const scrollToProjects = useCallback(function scrollToProjects() {
     const projectHeaderElm = document.getElementById(projectHeaderId)
     const scrollingContainer = document.getElementById('main')
+    const isMobile = window.innerWidth < 768
 
-    if (projectHeaderElm && scrollingContainer) {
+    if (projectHeaderElm && scrollingContainer && !isMobile) {
       // ScrollTo
       scrollingContainer.scrollTo({
-        top: projectHeaderElm.offsetTop,
+        top: window.innerHeight - 50,
         behavior: 'smooth',
       })
     }
@@ -145,6 +147,13 @@ const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
     },
     [scrollToProjects],
   )
+
+  useEffect(() => {
+    if (location.hash === '#scroll') {
+      scrollToProjects()
+      window.location.hash = ''
+    }
+  }, [])
 
   return (
     <Root>
@@ -196,7 +205,7 @@ export const query = graphql`
       }
     }
 
-    allPrismicProject(sort: { fields: data___number, order: ASC }) {
+    allPrismicProject(sort: { fields: data___number, order: DESC }) {
       edges {
         node {
           uid

@@ -23,7 +23,7 @@ const Root = styled.header`
 const Title = styled.h1`
   width: 100%;
   font-family: ${({ theme }) => theme.font.primary};
-  font-size: 1.7rem;
+  font-size: 2rem;
   font-weight: normal;
   line-height: 2.456rem;
   text-transform: uppercase;

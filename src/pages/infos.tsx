@@ -3,25 +3,34 @@ import { graphql } from 'gatsby'
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
+import { mobileStyle } from 'styles/responsive'
+import { InfoNav } from 'pageComponents/infos/InfoNav'
+
 const Root = styled.div<{ customBackground: string }>`
   width: 100%;
   height: 100%;
   background-color: ${({ customBackground }) => customBackground};
+
+  ${mobileStyle`
+    overflow-y: auto;
+    height: auto;
+  `}
 `
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  max-width: ${({ theme }) => theme.layout.maxWidth}px;
   margin: 0 auto;
   padding: 36px;
 
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) minmax(0, 1fr) minmax(
-      0,
-      6fr
-    );
+  grid-template-columns: minmax(0, 2fr) minmax(0, 2fr) minmax(0, 4fr);
   grid-column-gap: ${({ theme }) => theme.spacing[2]};
+
+  ${({ theme }) => mobileStyle`
+    display: block;
+    padding: ${theme.spacing[4]} ${theme.spacing[2]};
+  `}
 `
 
 const IdentityColumn = styled.div`
@@ -29,6 +38,7 @@ const IdentityColumn = styled.div`
   grid-column-end: 1;
   width: 100%;
   color: ${({ theme }) => theme.color.white};
+  max-width: 400px;
 
   h1,
   p,
@@ -50,26 +60,34 @@ const IdentityColumn = styled.div`
     width: 100%;
     height: auto;
   }
+  ${mobileStyle`
+    display: none;
+  `}
 `
 
 const Informations = styled.div`
-  grid-column-start: 4;
-  grid-column-end: 4;
+  grid-column-start: 3;
+  grid-column-end: 3;
   width: 100%;
   height: 100%;
   overflow-y: auto;
+
+  ${mobileStyle`
+    overflow-y: initial;
+    height: auto;
+  `}
 `
 
 const Scrollable = styled.div`
   color: ${({ theme }) => theme.color.white};
 
-  section {
-    position: relative;
-    .lang {
-      position: absolute;
-      top: 0;
-      left: -16.667%;
-    }
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  grid-column-gap: ${({ theme }) => theme.spacing[1]};
+
+  .lang {
+    font-size: 1.8rem;
+    line-height: 2.61rem;
   }
 
   .bio {
@@ -77,6 +95,11 @@ const Scrollable = styled.div`
     font-size: 1.8rem;
     line-height: 2.61rem;
     margin-bottom: ${({ theme }) => theme.spacing[4]};
+
+    ${mobileStyle`
+      font-size: 1.5rem;
+      line-height: 2.175rem;
+    `}
   }
 
   .domains {
@@ -86,6 +109,11 @@ const Scrollable = styled.div`
     font-size: 3rem;
     line-height: 4.35rem;
     margin-bottom: ${({ theme }) => theme.spacing[6]};
+
+    ${mobileStyle`
+      font-size: 1.4rem;
+      line-height: 2.03rem;
+    `}
   }
 
   div {
@@ -98,6 +126,11 @@ const Scrollable = styled.div`
       line-height: 3.045rem;
       font-weight: 300;
       color: inherit;
+
+      ${mobileStyle`
+      font-size: 1.5rem;
+      line-height: 2.175rem;
+    `}
     }
 
     ul {
@@ -105,6 +138,11 @@ const Scrollable = styled.div`
         font-size: 1.8rem;
         line-height: 2.61rem;
         color: inherit;
+
+        ${mobileStyle`
+      font-size: 1.5rem;
+      line-height: 2.175rem;
+    `}
 
         span {
           display: inline;
@@ -122,6 +160,27 @@ const Scrollable = styled.div`
   }
 `
 
+const IdentityColumnMobile = styled.div`
+  display: none;
+  ${({ theme }) => mobileStyle`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    width: 100%;
+    margin-bottom: ${theme.spacing[5]};
+
+    h1,
+    a,
+    ul > li {
+      color: ${theme.color.white};
+      font-size: 1.5rem;
+      line-height: 2.175rem;
+    }
+`}
+`
+
 const InfosPage: FC<PageData.InfosPage> = ({ data }) => {
   const {
     prismicInformationPage: { data: pageData },
@@ -129,6 +188,7 @@ const InfosPage: FC<PageData.InfosPage> = ({ data }) => {
 
   return (
     <Root customBackground={pageData.color}>
+      <InfoNav customBackground={pageData.color} />
       <Wrapper>
         <IdentityColumn>
           <h1>{pageData.name}</h1>
@@ -154,10 +214,28 @@ const InfosPage: FC<PageData.InfosPage> = ({ data }) => {
             <img src={pageData.media.url} alt={pageData.name} />
           )}
         </IdentityColumn>
+
         <Informations>
+          <IdentityColumnMobile>
+            <div>
+              <h1>{pageData.name}</h1>
+              <a href={`mailto:${pageData.email}`}>{pageData.email}</a>
+            </div>
+            <ul>
+              {pageData.social_networks.map(
+                ({ network_link, network_name }) => (
+                  <li key={network_link.url}>
+                    <a target="_blank" rel="noreferrer" href={network_link.url}>
+                      {network_name}
+                    </a>
+                  </li>
+                ),
+              )}
+            </ul>
+          </IdentityColumnMobile>
           <Scrollable>
+            <div className="lang">FR</div>
             <section>
-              <p className="lang">FR</p>
               <p
                 className="bio"
                 dangerouslySetInnerHTML={{ __html: pageData.fr_bio.html }}
@@ -215,8 +293,8 @@ const InfosPage: FC<PageData.InfosPage> = ({ data }) => {
               </div>
             </section>
             {/* ANGLAIS */}
+            <div className="lang">EN</div>
             <section>
-              <p className="lang">EN</p>
               <p
                 className="bio"
                 dangerouslySetInnerHTML={{ __html: pageData.en_bio.html }}
