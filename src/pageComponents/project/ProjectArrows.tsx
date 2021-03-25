@@ -17,6 +17,7 @@ const ArrowContainer = styled.div`
     align-items: center;
     width: 100%;
     padding: 0 ${theme.spacing[2]};
+    padding-top: 3rem;
   `}
 `
 

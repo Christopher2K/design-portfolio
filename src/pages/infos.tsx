@@ -85,6 +85,10 @@ const Scrollable = styled.div`
   grid-template-columns: 30px minmax(0, 1fr);
   grid-column-gap: ${({ theme }) => theme.spacing[1]};
 
+  ${mobileStyle`
+    padding-bottom: 100px;
+  `}
+
   .lang {
     font-size: 1.8rem;
     line-height: 2.61rem;

@@ -42,6 +42,10 @@ const RightScrollableWrapper = styled.div`
   padding-bottom: calc(
     ${({ theme }) => `${theme.spacing[4]} + ${theme.layout.desktopNavHeight}`}
   );
+
+  ${({ theme }) => mobileStyle`
+    padding-bottom: calc(150px + ${theme.layout.desktopNavHeight});
+  `}
 `
 
 const sideStyle = css`
@@ -162,11 +166,13 @@ const DescriptionContent = styled.div`
 const ProjectImage = styled.img`
   width: 100%;
   height: auto;
+  float: left;
 `
 
 const IframeContainer = styled.div`
   width: 100%;
   max-width: 100%;
+  float: left;
 
   div {
     position: relative;

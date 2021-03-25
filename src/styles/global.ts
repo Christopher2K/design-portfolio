@@ -46,6 +46,7 @@ export const Global = createGlobalStyle`
     font-size: 10px;
     overflow-y: hidden;
     font-family: 'Lausanne', sans-serif;
+    overflow: hidden;
     
     background-color: ${({ theme }) => theme.color.grey};
     

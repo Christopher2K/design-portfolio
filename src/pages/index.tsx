@@ -100,7 +100,7 @@ const Footer = styled.footer`
   padding-bottom: calc(${({ theme }) => theme.layout.desktopNavHeight} + 120px);
 
   ${({ theme }) => mobileStyle`
-    padding-bottom: calc(${theme.layout.desktopNavHeight} + 60px);
+    padding-bottom: calc(${theme.layout.desktopNavHeight} + 160px);
   `}
 
   p {
