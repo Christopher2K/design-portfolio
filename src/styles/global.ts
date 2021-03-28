@@ -40,6 +40,15 @@ export const Global = createGlobalStyle`
     font-display: swap;
   }
 
+  * {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 
   html,
   body {
@@ -47,6 +56,7 @@ export const Global = createGlobalStyle`
     overflow-y: hidden;
     font-family: 'Lausanne', sans-serif;
     overflow: hidden;
+    scroll-behavior: smooth;
     
     background-color: ${({ theme }) => theme.color.grey};
     

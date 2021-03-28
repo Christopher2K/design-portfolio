@@ -63,7 +63,7 @@ export const Nav: FC<NavProps> = ({ onProjectsClicked, className }) => {
         <NavLink.GatsbyLink to="/infos">Infos</NavLink.GatsbyLink>
       </NavSection>
       <NavSection>
-        <NavLink.GatsbyLink to="/#projets" onClick={onProjectsClicked}>
+        <NavLink.GatsbyLink to="/#projects" onClick={onProjectsClicked}>
           Projets
         </NavLink.GatsbyLink>
       </NavSection>

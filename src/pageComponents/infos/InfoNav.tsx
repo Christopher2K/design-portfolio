@@ -52,7 +52,7 @@ export const InfoNav: FC<InfoNavProps> = ({ customBackground }) => {
     <Root>
       <Wrapper style={{ backgroundColor: customBackground }}>
         <Content>
-          <NavLink.GatsbyLink to="/#scroll">Close</NavLink.GatsbyLink>
+          <NavLink.GatsbyLink to="/#projects">Close</NavLink.GatsbyLink>
         </Content>
       </Wrapper>
     </Root>

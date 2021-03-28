@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components'
 import { graphql } from 'gatsby'
-import React, { FC, useCallback, useEffect, useMemo } from 'react'
+import styled, { css } from 'styled-components'
+import React, { FC, useCallback } from 'react'
 import { Carousel, Nav, ProjectTile } from 'components'
 import { mobileStyle } from 'styles/responsive'
 
@@ -32,6 +32,8 @@ const Header = styled.header`
   flex-shrink: 0;
 
   ${sidePadding}
+  padding-top: ${props => props.theme.spacing[6]};
+
   margin-bottom: ${({ theme }) => theme.spacing[3]};
 
   ${({ theme }) => mobileStyle`
@@ -98,6 +100,7 @@ const Footer = styled.footer`
   width: 100%;
   max-width: ${({ theme }) => theme.layout.maxWidth}px;
   padding-bottom: calc(${({ theme }) => theme.layout.desktopNavHeight} + 120px);
+  line-height: 1.82rem;
 
   ${({ theme }) => mobileStyle`
     padding-bottom: calc(${theme.layout.desktopNavHeight} + 160px);
@@ -111,8 +114,6 @@ const Footer = styled.footer`
 `
 
 const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
-  const projectHeaderId = useMemo(() => 'projects', [])
-
   const carouselData = data.prismicHomePage.data.carousel_items.map(item => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { image, title, text_background } = item
@@ -124,47 +125,36 @@ const IndexPage: FC<PageData.Homepage> = ({ data, location }) => {
     }
   })
 
-  const scrollToProjects = useCallback(function scrollToProjects() {
-    const projectHeaderElm = document.getElementById(projectHeaderId)
+  const scrollToProjects = useCallback(function scrollToProjects(
+    event: React.MouseEvent<HTMLAnchorElement> | undefined,
+  ) {
+    if (event) {
+      event.preventDefault()
+    }
+    const projectHeaderElm = document.getElementById('projects')
     const scrollingContainer = document.getElementById('main')
     const isMobile = window.innerWidth < 768
 
     if (projectHeaderElm && scrollingContainer && !isMobile) {
       // ScrollTo
       scrollingContainer.scrollTo({
-        top: window.innerHeight - 50,
+        top: projectHeaderElm.offsetTop,
         behavior: 'smooth',
       })
     }
-  }, [])
-
-  const scrollToProjectsOnClick = useCallback(
-    function scrollToProjectsOnClick(
-      e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    ) {
-      e.preventDefault()
-      scrollToProjects()
-    },
-    [scrollToProjects],
-  )
-
-  useEffect(() => {
-    if (location.hash === '#scroll') {
-      scrollToProjects()
-      window.location.hash = ''
-    }
-  }, [])
+  },
+  [])
 
   return (
     <Root>
-      <Nav onProjectsClicked={scrollToProjectsOnClick} />
+      <Nav onProjectsClicked={scrollToProjects} />
       <Carousel items={carouselData} onEnd={scrollToProjects} />
-      <Header id={projectHeaderId}>
+      <Header id="projects">
         <Titles>
           <Title>{data.prismicHomePage.data.full_name}</Title>
           <Subtitle>{data.prismicHomePage.data.job_name}</Subtitle>
         </Titles>
-        <ContactLink href="#">Contact</ContactLink>
+        <ContactLink href="mailto:e.tchitchiama@gmail.com">Contact</ContactLink>
       </Header>
 
       <ProjectGrid>

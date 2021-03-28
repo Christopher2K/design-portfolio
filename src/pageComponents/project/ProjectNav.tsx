@@ -44,7 +44,7 @@ export const ProjectNav: FC<ProjectNavProps> = ({ previousUrl, nextUrl }) => {
     <Root>
       <Wrapper>
         <Content>
-          <NavLink.GatsbyLink to="/#scroll">Projets</NavLink.GatsbyLink>
+          <NavLink.GatsbyLink to="/#projects">Projets</NavLink.GatsbyLink>
           <ProjectArrows {...{ previousUrl, nextUrl }} />
         </Content>
       </Wrapper>

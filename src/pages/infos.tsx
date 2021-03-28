@@ -10,6 +10,7 @@ const Root = styled.div<{ customBackground: string }>`
   width: 100%;
   height: 100%;
   background-color: ${({ customBackground }) => customBackground};
+  overflow: hidden;
 
   ${mobileStyle`
     overflow-y: auto;
@@ -66,6 +67,7 @@ const IdentityColumn = styled.div`
 `
 
 const Informations = styled.div`
+  position: relative;
   grid-column-start: 3;
   grid-column-end: 3;
   width: 100%;
@@ -79,6 +81,11 @@ const Informations = styled.div`
 `
 
 const Scrollable = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
   color: ${({ theme }) => theme.color.white};
 
   display: grid;
@@ -86,6 +93,7 @@ const Scrollable = styled.div`
   grid-column-gap: ${({ theme }) => theme.spacing[1]};
 
   ${mobileStyle`
+    position: relative;
     padding-bottom: 100px;
   `}
 

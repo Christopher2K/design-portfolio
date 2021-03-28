@@ -39,9 +39,6 @@ const scrollableWrapperStyle = css`
 
 const RightScrollableWrapper = styled.div`
   ${scrollableWrapperStyle}
-  padding-bottom: calc(
-    ${({ theme }) => `${theme.spacing[4]} + ${theme.layout.desktopNavHeight}`}
-  );
 
   ${({ theme }) => mobileStyle`
     padding-bottom: calc(150px + ${theme.layout.desktopNavHeight});
@@ -161,6 +158,11 @@ const Description = styled.section`
 const DescriptionContent = styled.div`
   flex: 1;
   width: 100%;
+
+  a {
+    color: ${({ theme }) => theme.color.black};
+    text-decoration: underline;
+  }
 `
 
 const ProjectImage = styled.img`

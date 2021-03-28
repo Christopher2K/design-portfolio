@@ -16,7 +16,6 @@ const Root = styled.div`
   width: 100%;
   height: calc(100% - ${({ theme }) => theme.layout.desktopNavHeight});
   flex-shrink: 0;
-  margin-bottom: ${props => props.theme.spacing[6]};
 
   ${mobileStyle`
     display: none;
@@ -110,7 +109,7 @@ interface CarouselProps {
     url: string
     textBackground: 'light' | 'dark'
   }>
-  onEnd: () => void
+  onEnd: (data: undefined) => void
 }
 
 export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
@@ -135,7 +134,7 @@ export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
   const goToNextImage = useCallback(function goToNextImage() {
     setCurrentImage(current => {
       if (current === items.length - 1) {
-        onEnd()
+        onEnd(undefined)
         return current
       }
 
@@ -166,7 +165,7 @@ export const Carousel: FC<CarouselProps> = ({ items, onEnd }) => {
         {items.map((item, index) => (
           <Item key={item.label} backgroundUrl={item.url}>
             <ImageLabel background={item.textBackground}>
-              {item.label} [{index + 1}/{items.length}]
+              {item.label}
             </ImageLabel>
           </Item>
         ))}
