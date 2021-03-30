@@ -222,7 +222,7 @@ const InfosPage: FC<PageData.InfosPage> = ({ data }) => {
               )}
             </ul>
           </div>
-          {pageData.media && (
+          {pageData.media?.url && (
             <img src={pageData.media.url} alt={pageData.name} />
           )}
         </IdentityColumn>
